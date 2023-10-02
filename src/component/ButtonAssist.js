@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import assit from './74Uy.gif'
 const ButtonAssistant = () => {
   const [instructions] = useState({
     button1: "This button leads to your Uber App, so you can book your ride",
@@ -11,6 +11,8 @@ const ButtonAssistant = () => {
   });
 
   const [descriptionText, setDescriptionText] = useState('Select a button to see instructions.');
+  const [isDescriptionVisible, setIsDescriptionVisible] = useState(false);
+
   const [modelContainerPosition, setModelContainerPosition] = useState({
     top: 0,
     left: 0,
@@ -32,19 +34,22 @@ const ButtonAssistant = () => {
     e.preventDefault();
     e.stopPropagation();
     setDescriptionText(instructions[`button${buttonId}`]);
-
+    setIsDescriptionVisible(true);
+  
     const xPos = e.target.getBoundingClientRect().x;
     const yPos = e.target.getBoundingClientRect().y;
     const height = e.target.getBoundingClientRect().height;
-
+  
     moveModelContainer(xPos, yPos, height);
   };
   
+  
   return (
-    <div className=' h-screen w-full bg-cyan-400'>
-      <section className='container mx-auto'>
+    <div className='  '>
+      <section className='h-full'>
       <h1 className='text-center text-3xl py-6 font-bold'>The Assistant</h1>
-      <div className="btn-all grid container items-center justify-center px-auto mx-auto grid-cols-3 gap-20">
+      
+      <div className="btn-all grid container items-center justify-center mb-12 px-auto mx-auto grid-cols-3 gap-20">
         <button onClick={(e) => handleButtonClick(1, e)} data-id="1"   className='rounded-lg my-7 shadow-md w-48 font-medium text-xl py-1 cursor-pointer hover:bg-cyan-700'>
           Order Uber
         </button>
@@ -66,7 +71,8 @@ const ButtonAssistant = () => {
       </div>
       <div className="model flex justify-end align-end" style={modelContainerPosition}>
         <div id="container"></div>
-        <p className="descriptions  w-64 rounded-lg text-lg font-medium p-2 shadow-lg h-24">{descriptionText}</p>
+        <img src={assit} className='w-12 h-12 rounded-lg shadow-lg opacity-50' />
+        <p className="descriptions  w-64 rounded-lg text-lg font-medium p-2 shadow-lg h-24" style={isDescriptionVisible ? {display: 'block'} : { display: 'none' }}>{descriptionText}</p>
       </div>
       </section>
     </div>
